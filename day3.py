@@ -93,7 +93,7 @@ while (j < len(m)):
 
             # if it's a gear, calculate the gear ratio
             # this can be done without the parts array
-            if (after - before == 2 and m[j][i] == '*'):
+            if (after - before == 2 and line[i] == '*'):
                 r += parts[-1] * parts[-2]
         i += 1
     j += 1
