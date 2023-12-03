@@ -15,7 +15,6 @@ def getPart(m, i, j, parts):
     # check bounds
     if (j < 0 or j > len(m) or i < 0 or i > len(m[0])):
         return 0
-
     line = m[j]
     n = 0
 
@@ -30,7 +29,6 @@ def getPart(m, i, j, parts):
         mul = mul * 10
         line[x] = '.' # wipe it
         x -= 1
-    
     if (n == 0):
         return 0
 
@@ -43,7 +41,6 @@ def getPart(m, i, j, parts):
         n = n * 10 + d
         line[x] = '.' # wipe it
         x += 1
-
     parts.append(n)
     return n
 
@@ -52,7 +49,6 @@ def getPartsInRow(m, i, j, parts):
     n = 0
     if (j < 0 or j >= len(m)):
         return 0
-
     n += getPart(m, i-1, j, parts)
     n += getPart(m, i,   j, parts)
     n += getPart(m, i+1, j, parts)
@@ -70,8 +66,7 @@ def getParts(m, i, j, parts):
 
     # scan line below
     if (j < len(m) - 1):
-        n += getPartsInRow(m, i, j+1, parts)
-        
+        n += getPartsInRow(m, i, j+1, parts)    
     return n
 
 # naive algorithm scans every row for symbols, reads parts around them, wipes them out as it goes
