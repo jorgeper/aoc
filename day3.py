@@ -52,14 +52,12 @@ def getPartsInRow(m, i, j, parts):
     n = 0
     if (j < 0 or j >= len(m)):
         return 0
-
     n += getPart(m, i-1, j, parts)
     n += getPart(m, i,   j, parts)
     n += getPart(m, i+1, j, parts)
     return n
 
 # returns sum of any parts around a point (i, j) in the machine
-# parts is an array keeping all found parts for debugging
 def getParts(m, i, j, parts):
     n = 0
     n += getPartsInRow(m, i, j, parts)
