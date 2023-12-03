@@ -15,6 +15,7 @@ def getPart(m, i, j, parts):
     # check bounds
     if (j < 0 or j > len(m) or i < 0 or i > len(m[0])):
         return 0
+
     line = m[j]
     n = 0
 
@@ -29,6 +30,7 @@ def getPart(m, i, j, parts):
         mul = mul * 10
         line[x] = '.' # wipe it
         x -= 1
+    
     if (n == 0):
         return 0
 
@@ -41,6 +43,7 @@ def getPart(m, i, j, parts):
         n = n * 10 + d
         line[x] = '.' # wipe it
         x += 1
+
     parts.append(n)
     return n
 
@@ -49,6 +52,7 @@ def getPartsInRow(m, i, j, parts):
     n = 0
     if (j < 0 or j >= len(m)):
         return 0
+
     n += getPart(m, i-1, j, parts)
     n += getPart(m, i,   j, parts)
     n += getPart(m, i+1, j, parts)
@@ -66,25 +70,36 @@ def getParts(m, i, j, parts):
 
     # scan line below
     if (j < len(m) - 1):
-        n += getPartsInRow(m, i, j+1, parts)    
+        n += getPartsInRow(m, i, j+1, parts)
+        
     return n
 
 # naive algorithm scans every row for symbols, reads parts around them, wipes them out as it goes
 # parts stores all the found parts for debugging
+# turns out it comes handy to use it for returning gear ratios for part 2 of the problem
+# trivial to get rid of it for that purpose but I don't care
 parts = []
 dot = ord('.')
 j = 0
 n = 0
+r = 0
 while (j < len(m)):
     line = m[j]
     i = 0
     while (i < len(line)):
         d = ord(line[i])
         if d != dot and (d < 48 or d > 57): # not a dot nor a digit
-            print(i)
+            before = len(parts)
             n += getParts(m, i, j, parts)
+            after = len(parts)
+
+            # if it's a gear, calculate the gear ratio
+            # this can be done without the parts array
+            if (after - before == 2 and m[j][i] == '*'):
+                r += parts[-1] * parts[-2]
         i += 1
     j += 1
 
-print (parts)
-print (n)
+# print (parts)
+print ("parts: " + str(n))
+print ("ratios: " + str(r))
